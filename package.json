@@ -1,0 +1,25 @@
+{
+  "name": "react-d3-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next src",
+    "build": "next build src",
+    "start": "next start src"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^9.0.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@types/node": "^12.6.2",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.3"
+  }
+}
