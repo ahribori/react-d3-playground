@@ -1,46 +1,28 @@
 import React, { Component } from 'react';
-import * as d3 from 'd3';
-import * as topojson from 'topojson';
 import './sample.scss';
-
-const koreaMap = require('../../topojson/skorea-provinces-2018-topo-simple.json');
-const geojson = (topojson.feature(koreaMap, koreaMap.objects.skorea_provinces_2018_geo) as any)
-  .features;
+import KoreaMap from '../../components/KoreaMap';
 
 class Sample extends Component {
+  state = {
+    scale: 3000
+  };
+
   render() {
-    return <div className="d3" />;
-  }
+    const { scale } = this.state;
 
-  renderMap() {
-    const width = 800;
-    const height = 800;
-
-    const svg = d3
-      .select('.d3')
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height);
-
-    let projection = d3
-      .geoMercator()
-      .center([128, 36])
-      .scale(5000)
-      .translate([width / 2, height / 2]);
-
-    const path = d3.geoPath().projection(projection);
-
-    svg
-      .append('g')
-      .selectAll('path')
-      .data(geojson)
-      .enter()
-      .append('path')
-      .attr('d', path);
-  }
-
-  componentDidMount(): void {
-    this.renderMap();
+    return (
+      <div
+        onWheel={e => {
+          const nextValue = scale - e.deltaY * 10;
+          if (nextValue >= 1000 && nextValue <= 10000) {
+            this.setState({ scale: nextValue });
+          }
+        }}
+      >
+        <h3>Scale: {scale}</h3>
+        <KoreaMap scale={scale} translate={[0, 0]} />
+      </div>
+    );
   }
 }
 
