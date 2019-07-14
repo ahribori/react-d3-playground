@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import * as topojson from 'topojson';
 
-const seoulMap = require('../topojson/seoul_municipalities_topo_simple.json');
-const geojson = (topojson.feature(seoulMap, seoulMap.objects.seoul_municipalities_geo) as any)
+const koreaMap = require('../topojson/skorea-provinces-2018-topo-simple.json');
+const geojson = (topojson.feature(koreaMap, koreaMap.objects.skorea_provinces_2018_geo) as any)
   .features;
 
 interface IProps {
@@ -11,8 +11,7 @@ interface IProps {
   translate: [number, number];
 }
 
-const SeoulMap: React.FunctionComponent<IProps> = ({ scale }) => {
-  console.log('render');
+const KoreaMap: React.FunctionComponent<IProps> = ({ scale }) => {
   useEffect(() => {
     const width = 800;
     const height = 800;
@@ -22,22 +21,19 @@ const SeoulMap: React.FunctionComponent<IProps> = ({ scale }) => {
 
     let projection = d3
       .geoMercator()
-      .center([127, 37.5])
-      .scale(scale * 15)
+      .center([128, 36])
+      .scale(scale)
       .translate([x, y]);
 
     let path = d3.geoPath().projection(projection);
 
-    let _x = null;
-    let _y = null;
-
     const svg = d3
-      .select('.seoul_map')
+      .select('.d3')
       .append('svg')
       .attr('width', width)
       .attr('height', height);
 
-    const map = svg
+    svg
       .append('g')
       .selectAll('path')
       .data(geojson)
@@ -57,12 +53,15 @@ const SeoulMap: React.FunctionComponent<IProps> = ({ scale }) => {
         .attr('cx', d => projection([d.lon, d.lat])[0])
         // @ts-ignore
         .attr('cy', d => projection([d.lon, d.lat])[1])
-        .attr('r', 2);
-      // @ts-ignore
+        .attr('r', 1);
     });
+
+    return () => {
+      svg.remove();
+    }
   });
 
-  return <div className="seoul_map" />;
+  return <div className="d3" />;
 };
 
-export default SeoulMap;
+export default KoreaMap;
