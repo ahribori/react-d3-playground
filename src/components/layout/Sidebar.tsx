@@ -15,6 +15,11 @@ const Sidebar = () => {
           <a>Geo Sample</a>
         </Link>
       </li>
+      <li>
+        <Link href="/chart/sample" prefetch>
+          <a>Chart Sample</a>
+        </Link>
+      </li>
     </ul>
   );
 };
